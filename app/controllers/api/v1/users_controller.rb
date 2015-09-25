@@ -1,6 +1,10 @@
 class Api::V1::UsersController < ApplicationController
 	respond_to :json
 
+	def index
+	  respond_with User.all
+	end
+  
   def create
     user = User.new(user_params)
     if user.save
@@ -22,6 +26,12 @@ class Api::V1::UsersController < ApplicationController
 	  else
 	    render json: { errors: user.errors }, status: 422
 	  end
+	end
+
+	def destroy
+	  user = User.find(params[:id])
+	  user.destroy
+	  head 204
 	end
 
   private
